@@ -1,0 +1,19 @@
+{
+    "name": "quadvector/advanta-shop-client",
+    "description": "Advanta Shop REST client",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "QuadVector\\AdvantaShopClient\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "QuadVector",
+            "email": "info@quadvector.net"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
