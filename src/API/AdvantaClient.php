@@ -2,25 +2,29 @@
 
 namespace QuadVector\AdvantaShopClient\API;
 
-use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Client;
 use QuadVector\AdvantaShopClient\API\Module\Categories;
 
-final class Client
+final class AdvantaClient
 {
-	private GuzzleClient $HTTPClient; // Клиент Guzzle
+	private Client $HTTPClient; // Клиент Guzzle
 	private ?Categories $categoriesModule = null; // экземпляр модуля категорий
 
 	/**
 	 * Конструктор
 	 * 
-	 * @param string $baseURL Основная ссылка на действующий API адванты
+	 * @param string $baseURL Основная ссылка на действующий API адванты (c протоколом)
 	 * @param string $apiKey Ключ API
 	 */
 	public function __construct(
 		public string $baseURL,
 		public string $apiKey
 	) {
-		$this->HTTPClient = new GuzzleClient([
+		// обработка baseURL
+		// автоматически убираем слеш в конце
+		$baseURL = rtrim($baseURL, "/");
+
+		$this->HTTPClient = new Client([
 			'base_uri' => $this->baseURL,
 		]);
 	}
@@ -28,9 +32,9 @@ final class Client
 	/**
 	 * Получить текущий клиент Guzzle
 	 * 
-	 * @return GuzzleClient
+	 * @return Client
 	 */
-	public function getHTTPClient(): GuzzleClient
+	public function getHTTPClient(): Client
 	{
 		return $this->HTTPClient;
 	}

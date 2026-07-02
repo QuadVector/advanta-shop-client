@@ -3,7 +3,7 @@
 namespace QuadVector\AdvantaShopClient\API\Module;
 
 use GuzzleHttp\Exception\GuzzleException;
-use QuadVector\AdvantaShopClient\API\Client;
+use QuadVector\AdvantaShopClient\API\AdvantaClient;
 use QuadVector\AdvantaShopClient\Exception\APIException;
 
 /**
@@ -15,10 +15,10 @@ abstract class AbstractModule
 
 	/**
 	 * Конструктор
-	 * @param Client $client Экземпляр SDK-клиента
+	 * @param AdvantaClient $client Экземпляр клиента Advanta
 	 */
 	public function __construct(
-		protected Client $client,
+		protected AdvantaClient $client,
 	) {}
 
 	/**
@@ -26,6 +26,8 @@ abstract class AbstractModule
 	 * 
 	 * @param string $body Содержимое ответа в виде строки
 	 * @return array
+	 * 
+	 * @throws APIException
 	 */
 	private function decodeResponse(string $body): array
 	{
@@ -48,12 +50,16 @@ abstract class AbstractModule
 	 * @param string $url Ссылка
 	 * @param array<string, mixed> $query Параметры
 	 * @return array
+	 * 
+	 * @throws APIException
 	 */
 	protected function get(string $url, array $query = []): array
 	{
 		try {
-			$query["key"] = $this->client->apiKey;
-			$response = $this->client->getHTTPClient()->get($url, $query);
+			$query["apikey"] = $this->client->apiKey;
+			$response = $this->client->getHTTPClient()->get($url, [
+				"query" => $query
+			]);
 
 			return $this->decodeResponse($response->getBody()->getContents());
 		} catch (GuzzleException $ex) {
@@ -67,11 +73,13 @@ abstract class AbstractModule
 	 * @param string $url Ссылка
 	 * @param array<string, mixed> $query Параметры
 	 * @return array
+	 * 
+	 * @throws APIException
 	 */
 	protected function post(string $url, array $query = []): array
 	{
 		try {
-			$query["key"] = $this->client->apiKey;
+			$query["apikey"] = $this->client->apiKey;
 			$response = $this->client->getHTTPClient()->post($url, [
 				"form_params" => $query,
 			]);
@@ -88,11 +96,13 @@ abstract class AbstractModule
 	 * @param string $url Ссылка
 	 * @param array<string, mixed> $query Параметры
 	 * @return array
+	 * 
+	 * @throws APIException
 	 */
 	protected function put(string $url, array $query = []): array
 	{
 		try {
-			$query["key"] = $this->client->apiKey;
+			$query["apikey"] = $this->client->apiKey;
 			$response = $this->client->getHTTPClient()->put($url, [
 				"form_params" => $query,
 			]);
