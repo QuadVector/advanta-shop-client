@@ -57,8 +57,9 @@ abstract class AbstractModule
 	{
 		try {
 			$query["apikey"] = $this->client->apiKey;
+
 			$response = $this->client->getHTTPClient()->get($url, [
-				"query" => $query
+				"query" => $query,
 			]);
 
 			return $this->decodeResponse($response->getBody()->getContents());
@@ -66,22 +67,25 @@ abstract class AbstractModule
 			throw new APIException($ex->getMessage());
 		}
 	}
+
 
 	/**
 	 * Выполнить POST-запрос
 	 * 
 	 * @param string $url Ссылка
-	 * @param array<string, mixed> $query Параметры
+	 * @param array<string, mixed> $data Данные тела запроса
 	 * @return array
 	 * 
 	 * @throws APIException
 	 */
-	protected function post(string $url, array $query = []): array
+	protected function post(string $url, array $data = []): array
 	{
 		try {
-			$query["apikey"] = $this->client->apiKey;
 			$response = $this->client->getHTTPClient()->post($url, [
-				"form_params" => $query,
+				"query" => [
+					"apikey" => $this->client->apiKey,
+				],
+				"json" => $data,
 			]);
 
 			return $this->decodeResponse($response->getBody()->getContents());
@@ -90,21 +94,24 @@ abstract class AbstractModule
 		}
 	}
 
+
 	/**
 	 * Выполнить PUT-запрос
 	 * 
 	 * @param string $url Ссылка
-	 * @param array<string, mixed> $query Параметры
+	 * @param array<string, mixed> $data Данные тела запроса
 	 * @return array
 	 * 
 	 * @throws APIException
 	 */
-	protected function put(string $url, array $query = []): array
+	protected function put(string $url, array $data = []): array
 	{
 		try {
-			$query["apikey"] = $this->client->apiKey;
 			$response = $this->client->getHTTPClient()->put($url, [
-				"form_params" => $query,
+				"query" => [
+					"apikey" => $this->client->apiKey,
+				],
+				"json" => $data,
 			]);
 
 			return $this->decodeResponse($response->getBody()->getContents());
