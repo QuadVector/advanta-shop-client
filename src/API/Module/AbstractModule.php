@@ -94,6 +94,32 @@ abstract class AbstractModule
 		}
 	}
 
+	/**
+	 * Выполнить POST-запрос с multipart/form-data
+	 *
+	 * @param string $url Ссылка
+	 * @param array<int, array<string, mixed>> $multipart Данные multipart
+	 * @return array
+	 *
+	 * @throws APIException
+	 */
+	protected function postMultipart(string $url, array $multipart): array
+	{
+		try {
+			$response = $this->client->getHTTPClient()->post($url, [
+				"query" => [
+					"apikey" => $this->client->apiKey,
+				],
+				"multipart" => $multipart,
+			]);
+
+			return $this->decodeResponse(
+				$response->getBody()->getContents()
+			);
+		} catch (GuzzleException $ex) {
+			throw new APIException($ex->getMessage());
+		}
+	}
 
 	/**
 	 * Выполнить PUT-запрос

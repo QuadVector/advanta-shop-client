@@ -150,4 +150,185 @@ class Categories extends AbstractModule
 
 		return $response;
 	}
+
+	/**
+	 * Добавить изображение категории
+	 *
+	 * @param int $id ID категории
+	 * @param string $type Тип изображения
+	 * @param string $binary Бинарное содержимое изображения
+	 * @param string $mime MIME-тип изображения
+	 * @param string|null $filename Имя файла
+	 *
+	 * @return array
+	 */
+	private function addImage(
+		int $id,
+		string $type,
+		string $binary,
+		string $mime,
+		?string $filename = null
+	): array {
+		$extension = match ($mime) {
+			"image/png" => "png",
+			"image/jpeg" => "jpg",
+			"image/webp" => "webp",
+			default => throw new \InvalidArgumentException(
+				"Unsupported image MIME type: {$mime}"
+			),
+		};
+
+		$filename ??= "image.{$extension}";
+
+		return $this->postMultipart(
+			$this->getRequestURL() . "/" . $id . "/" . $type . "/add",
+			[
+				[
+					"name" => "file",
+					"contents" => $binary,
+					"filename" => $filename,
+					"headers" => [
+						"Content-Type" => $mime,
+					],
+				],
+			]
+		);
+	}
+
+	/**
+	 * Удалить изображение категории
+	 *
+	 * @param int $id ID категории
+	 * @param string $type Тип изображения
+	 *
+	 * @return array
+	 */
+	private function deleteImage(
+		int $id,
+		string $type
+	): array {
+		return $this->post(
+			$this->getRequestURL() . "/" . $id . "/" . $type . "/delete"
+		);
+	}
+
+	/**
+	 * Добавить основное изображение категории
+	 *
+	 * @param int $id ID категории
+	 * @param string $binary Бинарное содержимое изображения
+	 * @param string $mime MIME-тип изображения
+	 * @param string|null $filename Имя файла
+	 *
+	 * @return array
+	 */
+	public function addPicture(
+		int $id,
+		string $binary,
+		string $mime,
+		?string $filename = null
+	): array {
+		return $this->addImage(
+			$id,
+			"picture",
+			$binary,
+			$mime,
+			$filename
+		);
+	}
+
+	/**
+	 * Удалить основное изображение категории
+	 *
+	 * @param int $id ID категории
+	 *
+	 * @return array
+	 */
+	public function deletePicture(int $id): array
+	{
+		return $this->deleteImage(
+			$id,
+			"picture"
+		);
+	}
+
+	/**
+	 * Добавить мини-изображение категории
+	 *
+	 * @param int $id ID категории
+	 * @param string $binary Бинарное содержимое изображения
+	 * @param string $mime MIME-тип изображения
+	 * @param string|null $filename Имя файла
+	 *
+	 * @return array
+	 */
+	public function addMiniPicture(
+		int $id,
+		string $binary,
+		string $mime,
+		?string $filename = null
+	): array {
+		return $this->addImage(
+			$id,
+			"mini-picture",
+			$binary,
+			$mime,
+			$filename
+		);
+	}
+
+	/**
+	 * Удалить мини-изображение категории
+	 *
+	 * @param int $id ID категории
+	 *
+	 * @return array
+	 */
+	public function deleteMiniPicture(int $id): array
+	{
+		return $this->deleteImage(
+			$id,
+			"mini-picture"
+		);
+	}
+
+	/**
+	 * Добавить иконку категории для меню
+	 *
+	 * @param int $id ID категории
+	 * @param string $binary Бинарное содержимое изображения
+	 * @param string $mime MIME-тип изображения
+	 * @param string|null $filename Имя файла
+	 *
+	 * @return array
+	 */
+	public function addMenuIconPicture(
+		int $id,
+		string $binary,
+		string $mime,
+		?string $filename = null
+	): array {
+		return $this->addImage(
+			$id,
+			"menu-icon-picture",
+			$binary,
+			$mime,
+			$filename
+		);
+	}
+
+	/**
+	 * Удалить иконку категории для меню
+	 *
+	 * @param int $id ID категории
+	 *
+	 * @return array
+	 */
+	public function deleteMenuIconPicture(int $id): array
+	{
+		return $this->deleteImage(
+			$id,
+			"menu-icon-picture"
+		);
+	}
 }
