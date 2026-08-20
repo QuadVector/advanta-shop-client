@@ -21,6 +21,8 @@ abstract class AbstractModule
 		protected AdvantaClient $client,
 	) {}
 
+	abstract protected function getRequestURL(): string;
+
 	/**
 	 * Декодировать ответ в формате JSON и преобразовать в массив
 	 * 
@@ -49,14 +51,21 @@ abstract class AbstractModule
 	 * 
 	 * @param string $url Ссылка
 	 * @param array<string, mixed> $query Параметры
+	 * @param string $keyName Имя ключа, который будет задействован в запросе (обычный apiKey или authApiKey)
+	 * 
 	 * @return array
 	 * 
 	 * @throws APIException
 	 */
-	protected function get(string $url, array $query = []): array
+	protected function get(string $url, array $query = [], string $keyName = "apiKey"): array
 	{
+		var_dump($this->client->$keyName);
 		try {
-			$query["apikey"] = $this->client->apiKey;
+			if (isset($this->client->$keyName)) {
+				$query["apikey"] = $this->client->$keyName;
+			} else {
+				throw new APIException("API key is not set");
+			}
 
 			$response = $this->client->getHTTPClient()->get($url, [
 				"query" => $query,
@@ -74,17 +83,23 @@ abstract class AbstractModule
 	 * 
 	 * @param string $url Ссылка
 	 * @param array<string, mixed> $data Данные тела запроса
+	 * @param string $keyName Имя ключа, который будет задействован в запросе (обычный apiKey или authApiKey)
+	 * 
 	 * @return array
 	 * 
 	 * @throws APIException
 	 */
-	protected function post(string $url, array $data = []): array
+	protected function post(string $url, array $data = [], string $keyName = "apiKey"): array
 	{
 		try {
+			if (isset($this->client->$keyName)) {
+				$query["apikey"] = $this->client->$keyName;
+			} else {
+				throw new APIException("API key is not set");
+			}
+
 			$response = $this->client->getHTTPClient()->post($url, [
-				"query" => [
-					"apikey" => $this->client->apiKey,
-				],
+				"query" => $query,
 				"json" => $data,
 			]);
 
@@ -99,13 +114,21 @@ abstract class AbstractModule
 	 *
 	 * @param string $url Ссылка
 	 * @param array<int, array<string, mixed>> $multipart Данные multipart
+	 * @param string $keyName Имя ключа, который будет задействован в запросе (обычный apiKey или authApiKey)
+	 * 
 	 * @return array
 	 *
 	 * @throws APIException
 	 */
-	protected function postMultipart(string $url, array $multipart): array
+	protected function postMultipart(string $url, array $multipart, string $keyName = "apiKey"): array
 	{
 		try {
+			if (isset($this->client->$keyName)) {
+				$query["apikey"] = $this->client->$keyName;
+			} else {
+				throw new APIException("API key is not set");
+			}
+
 			$response = $this->client->getHTTPClient()->post($url, [
 				"query" => [
 					"apikey" => $this->client->apiKey,
@@ -126,17 +149,23 @@ abstract class AbstractModule
 	 * 
 	 * @param string $url Ссылка
 	 * @param array<string, mixed> $data Данные тела запроса
+	 * @param string $keyName Имя ключа, который будет задействован в запросе (обычный apiKey или authApiKey)
+	 * 
 	 * @return array
 	 * 
 	 * @throws APIException
 	 */
-	protected function put(string $url, array $data = []): array
+	protected function put(string $url, array $data = [], string $keyName = "apiKey"): array
 	{
 		try {
+			if (isset($this->client->$keyName)) {
+				$query["apikey"] = $this->client->$keyName;
+			} else {
+				throw new APIException("API key is not set");
+			}
+
 			$response = $this->client->getHTTPClient()->put($url, [
-				"query" => [
-					"apikey" => $this->client->apiKey,
-				],
+				"query" => $query,
 				"json" => $data,
 			]);
 

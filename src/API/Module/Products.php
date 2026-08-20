@@ -11,7 +11,7 @@ class Products extends AbstractModule
 	 *
 	 * @return string
 	 */
-	private function getRequestURL(): string
+	protected function getRequestURL(): string
 	{
 		return self::API_URL . self::MODULE_URL;
 	}
@@ -34,7 +34,7 @@ class Products extends AbstractModule
 	 */
 	public function getProduct(int $id, array $query = []): array|bool
 	{
-		$response = $this->get($this->getRequestURL() . "/" . $id, $query);
+		$response = $this->get($this->getRequestURL() . "/" . $id, $query, "authApiKey");
 
 		if ($response && is_array($response)) {
 			return $response;
@@ -72,7 +72,7 @@ class Products extends AbstractModule
 			$query["type"] = $type;
 		}
 
-		$response = $this->get($this->getRequestURL() . "/" . $id . "/properties", $query);
+		$response = $this->get($this->getRequestURL() . "/" . $id . "/properties", $query, "authApiKey");
 
 		if ($response && is_array($response)) {
 			return $response;

@@ -13,7 +13,7 @@ class Categories extends AbstractModule
 	 * 
 	 * @return string
 	 */
-	private function getRequestURL(): string
+	protected function getRequestURL(): string
 	{
 		return self::API_URL . self::MODULE_URL;
 	}
