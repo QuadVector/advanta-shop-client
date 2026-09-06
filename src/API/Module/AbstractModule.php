@@ -59,7 +59,6 @@ abstract class AbstractModule
 	 */
 	protected function get(string $url, array $query = [], string $keyName = "apiKey"): array
 	{
-		var_dump($this->client->$keyName);
 		try {
 			if (isset($this->client->$keyName)) {
 				$query["apikey"] = $this->client->$keyName;
