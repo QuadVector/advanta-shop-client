@@ -1,8 +1,8 @@
 <?php
 
-namespace QuadVector\AdvantaShopClient\API\Module;
+namespace QuadVector\AdvantShopClient\API\Module;
 
-use QuadVector\AdvantaShopClient\Helper\Text;
+use QuadVector\AdvantShopClient\Helper\Text;
 
 class Categories extends AbstractModule
 {

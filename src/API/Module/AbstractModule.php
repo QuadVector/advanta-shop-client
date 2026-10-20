@@ -1,13 +1,13 @@
 <?php
 
-namespace QuadVector\AdvantaShopClient\API\Module;
+namespace QuadVector\AdvantShopClient\API\Module;
 
 use GuzzleHttp\Exception\GuzzleException;
-use QuadVector\AdvantaShopClient\API\AdvantaClient;
-use QuadVector\AdvantaShopClient\Exception\APIException;
+use QuadVector\AdvantShopClient\API\AdvantClient;
+use QuadVector\AdvantShopClient\Exception\APIException;
 
 /**
- * Абстрактный класс-обертка для работы с тем или иным модулем AdvantaShop
+ * Абстрактный класс-обертка для работы с тем или иным модулем AdvantShop
  */
 abstract class AbstractModule
 {
@@ -15,10 +15,10 @@ abstract class AbstractModule
 
 	/**
 	 * Конструктор
-	 * @param AdvantaClient $client Экземпляр клиента Advanta
+	 * @param AdvantClient $client Экземпляр клиента Advant
 	 */
 	public function __construct(
-		protected AdvantaClient $client,
+		protected AdvantClient $client,
 	) {}
 
 	abstract protected function getRequestURL(): string;

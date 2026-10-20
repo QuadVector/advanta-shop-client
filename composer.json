@@ -1,11 +1,11 @@
 {
-	"name": "quadvector/advanta-shop-client",
-	"description": "Advanta Shop REST client",
+	"name": "quadvector/advant-shop-client",
+	"description": "Advant Shop REST client",
 	"type": "library",
 	"license": "MIT",
 	"autoload": {
 		"psr-4": {
-			"QuadVector\\AdvantaShopClient\\": "src/"
+			"QuadVector\\AdvantShopClient\\": "src/"
 		}
 	},
 	"authors": [

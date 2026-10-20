@@ -1,13 +1,13 @@
 <?php
 
-namespace QuadVector\AdvantaShopClient\API;
+namespace QuadVector\AdvantShopClient\API;
 
 use GuzzleHttp\Client;
-use QuadVector\AdvantaShopClient\API\Module\Categories;
-use QuadVector\AdvantaShopClient\API\Module\Products;
-use QuadVector\AdvantaShopClient\API\Module\Search;
+use QuadVector\AdvantShopClient\API\Module\Categories;
+use QuadVector\AdvantShopClient\API\Module\Products;
+use QuadVector\AdvantShopClient\API\Module\Search;
 
-final class AdvantaClient
+final class AdvantClient
 {
 	private Client $HTTPClient; // Клиент Guzzle
 	private ?Categories $categoriesModule = null; // экземпляр модуля категорий

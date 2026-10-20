@@ -1,6 +1,6 @@
 <?php
 
-namespace QuadVector\AdvantaShopClient\Helper;
+namespace QuadVector\AdvantShopClient\Helper;
 
 final class Text
 {

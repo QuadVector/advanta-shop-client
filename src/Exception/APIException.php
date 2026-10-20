@@ -1,6 +1,6 @@
 <?php
 
-namespace QuadVector\AdvantaShopClient\Exception;
+namespace QuadVector\AdvantShopClient\Exception;
 
 use Exception;
 

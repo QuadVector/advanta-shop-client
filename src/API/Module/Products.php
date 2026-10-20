@@ -1,6 +1,6 @@
 <?php
 
-namespace QuadVector\AdvantaShopClient\API\Module;
+namespace QuadVector\AdvantShopClient\API\Module;
 
 class Products extends AbstractModule
 {
